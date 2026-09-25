@@ -85,6 +85,33 @@ For applications meeting the configured salary threshold, the workflow:
 
 The workflow was tested with both qualifying and non-qualifying applications.
 
+## Database
+
+The project uses PostgreSQL with three main tables:
+
+- `applications` — stores job application records and their status
+- `webhook_events` — stores webhook event IDs for duplicate-event protection
+- `drug_searches` — stores selected results from openFDA searches
+
+The database structure is provided in [`practice-schema.sql`](db_schema/practice-schema.sql).
+
+## Project Structure
+
+```text
+api-practice/
+├── app.py
+├── database.py
+├── api_client.py
+├── db_schema/
+│   └── practice-schema.sql
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── README.md
+└── n8n/
+    └── application-qualification-workflow.json
+```
+
 ## API Examples
 
 ### Create an application
