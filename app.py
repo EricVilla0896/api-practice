@@ -109,6 +109,14 @@ def webhook():
                 cursor = connection.cursor()
                 cursor.execute(
                     """
+                    INSERT into api_practice_schema.webhook_events
+                        (event_id)
+                    VALUES (%s)
+                    """,
+                    (json_data["event_id"],)
+                )
+                cursor.execute(
+                    """
                     INSERT into api_practice_schema.applications
                     (company,
                      position,
@@ -116,14 +124,6 @@ def webhook():
                     VALUES (%s, %s, %s)
                     """,
                     (json_data["company"], json_data["position"], json_data["salary"])
-                )
-                cursor.execute(
-                    """
-                    INSERT into api_practice_schema.webhook_events
-                    (event_id)
-                    VALUES (%s)
-                    """,
-                    (json_data["event_id"],)
                 )
         except UniqueViolation:
             return jsonify({"error": "Webhook event already processed"}), 409
@@ -166,7 +166,7 @@ def create_application():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     return jsonify({
-        "id": abc
+        "id": new_id
     })
 
 @app.route('/applications', methods=['GET'])
