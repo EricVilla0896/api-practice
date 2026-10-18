@@ -10,10 +10,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        0
+        -400,
+        96
       ],
-      "id": "5591b469-f06a-4ff8-8ff9-05c7aa202644",
+      "id": "7de8026a-2625-480f-8814-4f01a4933b4e",
       "name": "Webhook",
       "webhookId": "e45bcb83-e856-4a9a-b41b-5aba7980a2ea"
     },
@@ -44,10 +44,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        224,
-        0
+        -224,
+        96
       ],
-      "id": "8a6b30b1-b909-4003-9145-bb959485c9fc",
+      "id": "c8ec86a5-aaa9-4d97-994f-ebcee40589b0",
       "name": "If"
     },
     {
@@ -85,11 +85,13 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        448,
-        -96
+        -32,
+        0
       ],
-      "id": "7da85783-f8f7-46c3-ab58-9935df42668b",
-      "name": "HTTP Request"
+      "id": "50923c68-6b99-4f5a-b0d4-35b00682f9ef",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -98,10 +100,10 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        448,
-        96
+        -32,
+        192
       ],
-      "id": "b001006b-d887-4f86-b8c6-e2d4c843dac1",
+      "id": "6d8c3882-b41d-4898-a641-0cf7d9cd2585",
       "name": "Stop and Error"
     },
     {
@@ -131,11 +133,46 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        640,
-        -96
+        128,
+        0
       ],
-      "id": "42aa79f0-e6f9-4033-9dce-700239dd73b9",
-      "name": "HTTP Request1"
+      "id": "16b45473-66e7-4fcd-bc81-11c3ecee2383",
+      "name": "HTTP Request1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"message\": \"Operation completed\",\n  \"status\": \"updated\"\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        288,
+        0
+      ],
+      "id": "7bceac5a-9fcd-4201-9458-73d82fea9a1b",
+      "name": "Success Reponse"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": false,\n  \"message\": \"The request to the Flask API failed.\"\n}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        288,
+        192
+      ],
+      "id": "67f86aa1-3755-4f7b-b0d3-aabb9444f5d4",
+      "name": "Error Response"
     }
   ],
   "pinData": {},
@@ -177,6 +214,31 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Success Reponse",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     }
@@ -186,11 +248,11 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "b59918b1-3e5b-497c-9c6c-bc71ed8f8c9b",
+  "versionId": "58f35f8c-3960-4459-a84c-2883ea2cb115",
   "meta": {
-    "instanceId": "45bd7a8ad7c4bf0d62a749ffc9e8738ee777c83374a16fa37be19e0450b403c7"
+    "instanceId": "969acad9c88826645f57d4411c1c6cdf9958247c8c4e5e1d34eefcc2cbf4dd65"
   },
   "nodeGroups": [],
-  "id": "jEtlnTeFtPkAEYy6",
+  "id": "UiOJ7u1Nb4nZjK6C",
   "tags": []
 }
